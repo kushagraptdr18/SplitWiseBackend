@@ -3,6 +3,8 @@ const groupModel = require('../models/groupModel');
 const expenseModel = require('../models/expenseModel');
 module.exports.expensesCreateController = async function (req, res) {
   try {
+    console.log(req.body);
+    
     const { groupId, description, amount, paidBy, participants } = req.body;
     const loggedUserId = req.user._id;
 
@@ -115,3 +117,48 @@ module.exports.viewAllExpensesForGroup = async (req, res) => {
     res.status(500).json({ message: 'An error occurred while retrieving expenses.', error: error.message });
   }
 };
+
+module.exports.viewMonthlyUserExpense =async (req, res) => {
+  try {
+    // Ensure user ID is properly formatted
+    const userId = new mongoose.Types.ObjectId(req.user.id); // Add 'new' here to convert user ID to ObjectId
+  
+    // Aggregation pipeline to calculate daily expenses for a specific user
+    const dailyExpenses = await expenseModel.aggregate([
+      {
+        $match: { paidBy: userId }, // Match expenses paid by the logged-in user
+      },
+      {
+        $project: {
+          day: { $dayOfMonth: '$createdAt' }, // Extract the day of the month from createdAt
+          month: { $month: '$createdAt' }, // Extract the month
+          year: { $year: '$createdAt' }, // Extract the year
+          amount: 1, // Include the amount field
+        },
+      },
+      {
+        $group: {
+          _id: { year: '$year', month: '$month', day: '$day' }, // Group by year, month, and day
+          totalAmount: { $sum: '$amount' }, // Sum the amounts for that day
+        },
+      },
+      { $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1 } }, // Sort by year, month, and day
+    ]);
+  
+    // Transforming the response for readability (optional)
+    const transformedExpenses = dailyExpenses.map((expense) => ({
+      year: expense._id.year,
+      month: expense._id.month,
+      day: expense._id.day,  // Add the day field
+      totalAmount: expense.totalAmount,
+    }));
+  
+    // Send the response with daily expenses
+    res.status(200).json(transformedExpenses);
+  } catch (error) {
+    console.error('Error fetching daily expenses:', error);
+    res.status(500).json({ error: 'Failed to fetch daily expenses' });
+  }
+  
+    
+}
