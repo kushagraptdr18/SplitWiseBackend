@@ -24,7 +24,7 @@ app.use(
     resave: false, // Don't save session if not modified
     saveUninitialized: false, // Don't create session until something is stored
     secret: "hh", // Session secret key for signing the session ID cookie
-    cookie: { secure: false }, // Set to true if using https
+    cookie: { secure: true }, // Set to true if using https
   })
 );
 

@@ -6,6 +6,7 @@ const secretKey = process.env.SECRET_KEY;
 
 module.exports.isLoggedIn=async function(req,res,next) {
     const token=req.cookies.token;
+    
     if(token)
     {
         jwt.verify(token,secretKey,async function(err,decoded){
