@@ -5,8 +5,8 @@ require('dotenv').config();
 const secretKey = process.env.SECRET_KEY;
 
 module.exports.isLoggedIn=async function(req,res,next) {
-    const token=req.cookies.token;
-    
+    const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.split(" ")[1]);
+
     if(token)
     {
         jwt.verify(token,secretKey,async function(err,decoded){
