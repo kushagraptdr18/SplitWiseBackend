@@ -25,7 +25,7 @@ module.exports.registerPageController=async (req,res)=>{
         // Set a cookie named 'token' with the generated JWT
         res.cookie('token', token, {
           httpOnly: true,  // Only accessible via HTTP (not through JavaScript)
-          secure: false,  // Set to true if using HTTPS
+          secure: true,  // Set to true if using HTTPS
           maxAge: 24 * 60 * 60 * 1000  // 1 day in milliseconds
         });
            return res.send("registered successfully")
@@ -51,7 +51,7 @@ module.exports.loginPageController = async (req, res) => {
         res.cookie('token', token, {
           httpOnly: true,  // Only accessible via HTTP (not through JavaScript)
           secure: true,  // Set to true if using HTTPS
-          maxAge: 24 * 60 * 60 * 1000  // 1 day in milliseconds
+        
         });
         
 
