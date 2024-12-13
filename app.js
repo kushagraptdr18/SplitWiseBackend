@@ -7,6 +7,7 @@ const db = require("./config/mongoConfig");
 const cookieParser = require('cookie-parser');
 const userModel = require('./models/userModel');
 const expressSession = require('express-session');
+const port = process.env.PORT || 3000;
 
 // Enable CORS for all requests
 // const cors = require('cors');
@@ -41,6 +42,6 @@ app.use("/", indexRouter);
 app.use("/group", groupRouter);
 app.use("/expense", expenseRouter);
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
