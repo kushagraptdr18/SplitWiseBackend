@@ -37,7 +37,7 @@ const indexRouter = require("./routes/index");
 const groupRouter = require("./routes/group");
 const expenseRouter = require("./routes/expenses");
 
-app.use("/", indexRouter);
+app.use("/auth", indexRouter);
 app.use("/group", groupRouter);
 app.use("/expense", expenseRouter);
 
