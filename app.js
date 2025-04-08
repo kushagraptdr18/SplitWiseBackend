@@ -12,11 +12,11 @@ const port = process.env.PORT || 3000;
 // Enable CORS for all requests
 // const cors = require('cors');
 
-
 app.use(cors({
-  origin: "http://localhost:5173" || "https://splitwise-frontend-silk.vercel.app/",
+  origin: ["http://localhost:5173", "https://splitwise-frontend-silk.vercel.app"],
   credentials: true
 }));
+
 // Setup session middleware
 app.use(
   expressSession({
