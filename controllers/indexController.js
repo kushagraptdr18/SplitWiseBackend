@@ -27,7 +27,8 @@ module.exports.registerPageController=async (req,res)=>{
           secure: false,  // Set to true if using HTTPS
           maxAge: 24 * 60 * 60 * 1000  // 1 day in milliseconds
         });
-           return res.send("registered successfully")
+        return res.status(201).json({ message: "Registered successfully" });
+
           })
           
     
