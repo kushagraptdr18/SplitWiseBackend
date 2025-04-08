@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "http://localhost:5173" || "https://splitwise-frontend-silk.vercel.app/",
   credentials: true
 }));
 // Setup session middleware
