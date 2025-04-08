@@ -11,20 +11,19 @@ const port = process.env.PORT || 3000;
 
 // Enable CORS for all requests
 // const cors = require('cors');
-app.use(cors({
-  origin: process.env.FRONTEND_URL,  // Frontend URL
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type','Authorization'],
-  credentials: true,  // Allow credentials (cookies) to be sent
-}));
 
+
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 // Setup session middleware
 app.use(
   expressSession({
     resave: false, // Don't save session if not modified
     saveUninitialized: false, // Don't create session until something is stored
     secret: "hh", // Session secret key for signing the session ID cookie
-    cookie: { secure: true }, // Set to true if using https
+    cookie: { secure: false }, // Set to true if using https
   })
 );
 

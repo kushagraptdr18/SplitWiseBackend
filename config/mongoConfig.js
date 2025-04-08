@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://minor:a8ctCawHrsWLnCjw@cluster0.i7d1t.mongodb.net/MINORPROJECT")
+mongoose.connect(process.env.MONGODB_URL)
 const db = mongoose.connection;
 
 db.on("error",(err)=>{

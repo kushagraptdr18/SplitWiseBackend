@@ -8,8 +8,7 @@ const secretKey = process.env.SECRET_KEY;
 
 module.exports.registerPageController=async (req,res)=>{
     let{name,contact,email,password}=req.body
- 
-    //existing user
+    
 
     const check=await userModel.findOne({email});
     if(check)return res.send("already registered");
@@ -19,13 +18,13 @@ module.exports.registerPageController=async (req,res)=>{
         bcrypt.genSalt(10,async function(err,salt){
             bcrypt.hash(password,salt,async function(err,hash)
            {
-           const newUser= await userModel.create({name, contact, email, password:hash });
+           const user= await userModel.create({name, contact, email, password:hash });
            const token = jwt.sign({ id: user._id, email: user.email }, secretKey);
         
         // Set a cookie named 'token' with the generated JWT
         res.cookie('token', token, {
           httpOnly: true,  // Only accessible via HTTP (not through JavaScript)
-          secure: true,  // Set to true if using HTTPS
+          secure: false,  // Set to true if using HTTPS
           maxAge: 24 * 60 * 60 * 1000  // 1 day in milliseconds
         });
            return res.send("registered successfully")
