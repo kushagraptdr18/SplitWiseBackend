@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 // const cors = require('cors');
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://splitwise-frontend-silk.vercel.app"],
+  origin: true,
   credentials: true
 }));
 
