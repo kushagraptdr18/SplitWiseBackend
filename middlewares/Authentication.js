@@ -9,7 +9,7 @@ module.exports.isLoggedIn = async function (req, res, next) {
     try {
         // Get token from cookie or authorization header
         const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.split(" ")[1]);
-
+        
         
         
         if (!token) {

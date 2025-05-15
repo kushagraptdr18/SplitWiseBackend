@@ -48,11 +48,7 @@ module.exports.loginPageController = async (req, res) => {
         const token = jwt.sign({ id: user._id, email: user.email }, secretKey);
         
         // Set a cookie named 'token' with the generated JWT
-        res.cookie('token', token, {
-          httpOnly: true,  // Only accessible via HTTP (not through JavaScript)
-          secure: true,  // Set to true if using HTTPS
-        
-        });
+        res.cookie('token', token);
         
 
         res.send({ message: "Successfully Login", token: token });
